@@ -1,6 +1,6 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
-  import { getFirestore,collection,getDocs } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
+  import { getFirestore,collection,getDocs,getDoc,doc,addDoc,updateDoc } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,23 +24,74 @@
 const commentRef = collection(db,'comment');
 
 //get comment
-const read_comment = ()=>{
+const readAll = ()=>{
 const comment = []
 getDocs(commentRef)
 .then((snapshot)=>{
 snapshot.docs.forEach((doc)=>{
-console.log('====================================');
-console.log(doc.data());
-console.log('====================================');
+    comment.push({id:doc.id,...doc.data()})
 })
 })
-.catch((err)=>{
-console.log('====================================');
-console.log(err.message);
-console.log('====================================');
-})
+// .catch((err)=>{
+// console.log('====================================');
+// console.log(err.message);
+// console.log('====================================');
+// })
+    console.log('====================================');
+    console.log(comment);
+    console.log('====================================');
 }
 
-read_comment() 
+const readOne =(id)=>{
+    const docRef = doc(db,'comment',id);
+    const comment = {}
+    getDoc(docRef)
+        .then(doc=>{
+            console.log('====================================');
+            console.log({id:doc.id,...doc.data()});
+            console.log('====================================');
+        })
+}
+
+// readOne('cbLd37U52IxNgSVIaz33');
+
+const createOne = ({name,email,body}) => {
+    console.log('====================================');
+    const comment = {name,email,body};
+    addDoc(commentRef,{name,email,body})
+        .then(()=>{
+            console.log('====================================');
+            console.log('Successfully insertion');
+            console.log('====================================');
+        })
+    // console.log({name,email,body});
+    // console.log('====================================');
+}
+
+// createOne({
+//     "postId": 1,
+//     "id": 1,
+//     "name": "id labore ex et quam laborum",
+//     "email": "Eliseo@gardner.biz",
+//     "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+// })
   
-  
+  const updateOne = (obj) => {
+      const docRef = doc(db,'comment',obj.id)
+      delete obj['id'];
+      updateDoc(docRef,obj)
+        .then(()=>{
+            console.log('====================================');
+            console.log("Successfull");
+            console.log('====================================');
+        })
+  }
+
+  updateOne ({
+    "id":'qwV4dGQ93ZnmLdoa3Myp',
+    "name": "Dog",
+  })
+
+//   updateOne();
+
+// const deleteOne = ()
