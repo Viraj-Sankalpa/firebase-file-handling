@@ -1,6 +1,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
-  import { getFirestore,collection } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
+  import { getFirestore,collection,getDocs } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
+
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,6 +16,9 @@
   };
 
   // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  //
   const db = getFirestore();
 //
 const commentRef = collection(db,'comment');
@@ -26,7 +30,7 @@ getDocs(commentRef)
 .then((snapshot)=>{
 snapshot.docs.forEach((doc)=>{
 console.log('====================================');
-console.log(doc.id);
+console.log(doc.data());
 console.log('====================================');
 })
 })
@@ -39,4 +43,4 @@ console.log('====================================');
 
 read_comment() 
   
-
+  
