@@ -16,7 +16,8 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  
+  export const app = initializeApp(firebaseConfig);
 
   //
   const db = getFirestore();
@@ -87,11 +88,16 @@ const createOne = ({name,email,body}) => {
         })
   }
 
-  updateOne ({
-    "id":'qwV4dGQ93ZnmLdoa3Myp',
-    "name": "Dog",
-  })
+  // updateOne ({
+  //   "id":'qwV4dGQ93ZnmLdoa3Myp',
+  //   "name": "Dog",
+  // })
 
 //   updateOne();
 
 // const deleteOne = ()
+
+
+const getMap = async()=>{
+  const response = await fetc('https://jsonplaceholder.typicode.com/posts?userId=1')
+}
